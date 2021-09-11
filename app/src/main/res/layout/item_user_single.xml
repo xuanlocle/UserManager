@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvAvatar"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_small"
+        android:adjustViewBounds="true"
+        app:shapeAppearance="@style/circle"
+        tools:src="@color/grey_f6" />
+
+    <com.xuanlocle.usermanager.widget.TextViewEx
+        android:id="@+id/tvTitle"
+        style="@style/TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imvAvatar"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/imvAvatar"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:fontSize="title"
+        app:fontType="bold"
+        tools:text="[login]" />
+
+
+    <com.xuanlocle.usermanager.widget.TextViewEx
+        android:id="@+id/tvDescription"
+        style="@style/TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_tiny"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_toEndOf="@id/imvAvatar"
+        android:ellipsize="marquee"
+        tools:text="[html_url]" />
+
+</RelativeLayout>
