@@ -69,8 +69,8 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
             when (val result = repository.fetchUsers(mLastRowUserId)) {
                 is BaseResult.Success -> {
                     showLoading.value = false
+                    showLoadingMore.value = false
                     if (result.data != null) {
-                        showLoadingMore.value = false
                         val userModel = result.data
                         saveLastRowUserId(userModel.last().id)
                         userListMore.value = userModel
