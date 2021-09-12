@@ -23,7 +23,7 @@ Android users manager application implemented using the MVVM pattern, Kodein, Re
 
 # App download
 
-Android download link：https://github.com/xuanlocle/UserManager/blob/e18894bba041672fd8c2ae6c0fe56d0bf3f167e9/app-dev-release.apk
+Android download link：https://github.com/xuanlocle/UserManager/blob/073ca5d9376ea1708fa8eb3439838c6319e987bf/app-dev-release.apk
 
 # Features
 
