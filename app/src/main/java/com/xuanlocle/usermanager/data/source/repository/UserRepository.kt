@@ -9,4 +9,5 @@ interface UserRepository {
     suspend fun removeOldData()
 
     suspend fun fetchUserProfileById(userLoginId: String): BaseResult<UserProfileModel>
+    suspend fun fetchUpdateUserProfileById(userLoginId: String): BaseResult<UserProfileModel>
 }

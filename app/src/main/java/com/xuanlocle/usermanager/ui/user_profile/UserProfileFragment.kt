@@ -37,6 +37,10 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        vRefresh.setOnRefreshListener {
+            viewModel.reloadProfile()
+        }
+
         arguments?.let { args ->
             if (args.containsKey(Constants.BundleKey.USER_ID)) {
                 val userLoginId = args.getString(Constants.BundleKey.USER_ID) ?: ""
@@ -51,6 +55,13 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
     override fun initObserve() {
         viewModel.profileLiveData.observe(viewLifecycleOwner, { profile ->
             showProfileInfo(profile)
+        })
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            if(it){
+                onRefreshStart()
+                return@observe
+            }
+            onRefreshCompleted()
         })
     }
 
@@ -85,16 +96,24 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
     }
 
     private fun showAvatarDialog(name: String, avatarURL: String) {
-            if (isForeground) {
-                ImageDialog( )
-                    .init(name = name)
-                    .setImageUrl(avatarURL)
-                    .show(parentFragmentManager, "ImageDialog")
-            }
+        if (isForeground) {
+            ImageDialog()
+                .init(name = name)
+                .setImageUrl(avatarURL)
+                .show(parentFragmentManager, "ImageDialog")
+        }
     }
 
     override fun init() {
         viewModel = ViewModelProvider(this, factory).get(UserProfileViewModel::class.java)
         viewModel.init()
+    }
+
+    private fun onRefreshStart() {
+        vRefresh?.isRefreshing = true
+    }
+
+    private fun onRefreshCompleted() {
+        vRefresh?.isRefreshing = false
     }
 }

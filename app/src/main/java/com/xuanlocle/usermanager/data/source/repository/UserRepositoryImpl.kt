@@ -77,6 +77,29 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun fetchUpdateUserProfileById(userLoginId: String): BaseResult<UserProfileModel> {
+        return withContext(Dispatchers.IO) {
+            val mapper = UserProfileMapperRemote()
+            val localMapper = UserProfileMapperLocal()
+            when (val response = remoteDataSource.fetchUserProfile(userLoginId)) {
+                is BaseResult.Success -> {
+                    if (response.data != null) {
+                        val userModel = mapper.transformToDomain(response.data)
+                        localDataSource.saveUserProfileToLocal(localMapper.transformToDTO(userModel))
+                        return@withContext BaseResult.Success(userModel)
+                    } else {
+                        return@withContext BaseResult.Success(null)
+                    }
+                }
+                is BaseResult.Error -> {
+                    return@withContext BaseResult.Error(response.error)
+                }
+                is BaseResult.Loading -> return@withContext BaseResult.Loading
+            }
+        }
+    }
+
+
     private fun saveLastUpdatedAt() {
         usersPreference.setLastUpdateAt(DateTimeHelper.getCurrentDateTime())
     }
