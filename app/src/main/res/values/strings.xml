@@ -11,4 +11,5 @@
     <string name="profile_repos_title">Repos</string>
 
     <string name="error_dialog_title">Error</string>
+    <string name="profile_title">Profile</string>
 </resources>

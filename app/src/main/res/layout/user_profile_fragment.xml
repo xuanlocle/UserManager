@@ -56,6 +56,33 @@
                 app:strokeColor="@color/white"
                 app:strokeWidth="5dp" />
 
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_shadow_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.xuanlocle.usermanager.widget.TextViewEx
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/profile_title"
+                    android:textColor="@color/white"
+                    app:fontSize="title" />
+
+                <ImageView
+                    android:id="@+id/imvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:padding="@dimen/margin_tiny"
+                    android:src="@drawable/ic_arrow_left_white" />
+            </RelativeLayout>
+
             <com.xuanlocle.usermanager.widget.TextViewEx
                 android:id="@+id/tvProfileName"
                 style="@style/TextView"

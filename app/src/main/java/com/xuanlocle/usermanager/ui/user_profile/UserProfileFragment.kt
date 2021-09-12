@@ -42,6 +42,10 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
             viewModel.reloadProfile()
         }
 
+        imvBack.setOnClickListener {
+            navigateBack()
+        }
+
         arguments?.let { args ->
             if (args.containsKey(Constants.BundleKey.USER_ID)) {
                 val userLoginId = args.getString(Constants.BundleKey.USER_ID) ?: ""
