@@ -10,7 +10,6 @@ import com.xuanlocle.usermanager.ui.adapter.item.LoadingRecyclerItem
 import com.xuanlocle.usermanager.ui.base.BaseCollectionFragment
 import com.xuanlocle.usermanager.ui.user_list.item.RepoRecyclerViewItem
 import com.xuanlocle.usermanager.ui.user_list.item.UserRecyclerItemListener
-import kotlinx.android.synthetic.main.activity_landing.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -39,31 +38,24 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
     }
 
     override fun initObserve() {
-        viewModel.repos.observe(this, { repos ->
+        viewModel.repos.observe(viewLifecycleOwner, { repos ->
+            onRefreshCompleted()
             repos?.let {
-                if (isLoadingMore) {
-                    onLoadMoreComplete()
-                    mRecyclerManager.append(RepoRecyclerViewItem::class,
-                        repos.map { RepoRecyclerViewItem(it, this) })
-                    return@let
-                }
-
                 mRecyclerManager.replace(
                     RepoRecyclerViewItem::class,
                     repos.map { RepoRecyclerViewItem(it, this) })
             }
-
         })
 
-        viewModel.isLoading.observe(this, {
-            if (it) {
-                onRefreshStart()
-            } else {
-                onRefreshCompleted()
+        viewModel.reposMore.observe(viewLifecycleOwner, { repos ->
+            if (isLoadingMore) {
+                onLoadMoreComplete()
+                mRecyclerManager.append(RepoRecyclerViewItem::class,
+                    repos.map { RepoRecyclerViewItem(it, this) })
             }
         })
 
-        viewModel.isLoadingMore.observe(this, {
+        viewModel.isLoadingMore.observe(viewLifecycleOwner, {
             if (it && isLoadingMore == false) {
                 isLoadingMore = true
                 addLoadingMoreUpdate()
@@ -79,7 +71,7 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getRepositories()
+        savedInstanceState ?: viewModel.getRepositories()
     }
 
     override fun loadMore() {
@@ -98,7 +90,6 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
         isLoadingMore = false
     }
 
-
     private fun addLoadingMoreUpdate() {
         mRecyclerManager.adapter?.append(LoadingRecyclerItem())
     }
@@ -111,5 +102,10 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         startActivity(intent)
+    }
+
+    override fun onRefreshStart() {
+        super.onRefreshStart()
+        viewModel.reloadRepositories()
     }
 }

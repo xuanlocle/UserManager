@@ -1,7 +1,5 @@
 package com.xuanlocle.usermanager.ui.adapter;
 
-import com.xuanlocle.usermanager.ui.adapter.RecyclerViewAdapter;
-import com.xuanlocle.usermanager.ui.adapter.RenderRange;
 import com.xuanlocle.usermanager.ui.adapter.item.RecyclerViewItem;
 
 import java.util.ArrayList;

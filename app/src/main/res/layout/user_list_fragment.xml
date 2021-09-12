@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/vActionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/user_list_action_bar_title"
+        app:titleCentered="true"
+        android:elevation="1dp"
+        />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/vRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/vActionbar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

@@ -54,8 +54,8 @@ class UserRepositoryImpl(
     }
 
     override suspend fun removeOldData() {
-//        with(Dispatchers.IO) {
-//            localDataSource.removeOldData()
-//        }
+        withContext(Dispatchers.IO) {
+            localDataSource.removeOldData()
+        }
     }
 }

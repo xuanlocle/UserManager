@@ -2,7 +2,6 @@ package com.xuanlocle.usermanager.ui.base
 
 import android.os.Bundle
 import android.view.View
-import com.xuanlocle.usermanager.util.Constants
 
 abstract class BaseFragmentMVVM<VM : BaseViewModel> : BaseFragment() {
 

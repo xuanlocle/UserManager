@@ -11,21 +11,27 @@ import com.xuanlocle.usermanager.usersPreference
 import com.xuanlocle.usermanager.util.Constants
 import com.xuanlocle.usermanager.util.datetime.DateTimeHelper
 import com.xuanlocle.usermanager.widget.MutableLiveDataSingle
-import com.xuanlocle.usermanager.widget.default
 import kotlinx.coroutines.launch
 
-class UserListViewModel(private val repository: UserRepository): BaseViewModel() {
+class UserListViewModel(private val repository: UserRepository) : BaseViewModel() {
 
     private var reposLiveData = MutableLiveData<List<UserModel>>()
     val repos: LiveData<List<UserModel>>
         get() = reposLiveData
 
+    private var reposMoreLiveData = MutableLiveDataSingle<List<UserModel>>()
+    val reposMore: LiveData<List<UserModel>>
+        get() = reposMoreLiveData
+
     private val showLoading = MutableLiveDataSingle<Boolean>()
     val isLoading: LiveData<Boolean> get() = showLoading
 
-    private val showLoadingMore = MutableLiveDataSingle<Boolean>().default(false)
+    private val showLoadingMore = MutableLiveDataSingle<Boolean>()
     val isLoadingMore: LiveData<Boolean> get() = showLoadingMore
 
+    /**
+     * This field init = 0 when first launch. Then update with last user id of list.
+     */
     private var mLastRowUserId = 0
 
     fun getRepositories() {
@@ -67,7 +73,7 @@ class UserListViewModel(private val repository: UserRepository): BaseViewModel()
                         showLoadingMore.value = false
                         val reposModel = result.data
                         saveLastRowUserId(reposModel.last().id)
-                        reposLiveData.value = reposModel
+                        reposMoreLiveData.value = reposModel
 
                     }
                 }
@@ -94,5 +100,31 @@ class UserListViewModel(private val repository: UserRepository): BaseViewModel()
     override fun restoreState(savedInstanceState: Bundle) {
         if (savedInstanceState.containsKey(Constants.BundleKey.LAST_ROW_USER_ID))
             mLastRowUserId = savedInstanceState.getInt(Constants.BundleKey.LAST_ROW_USER_ID)
+    }
+
+    fun reloadRepositories() {
+        mLastRowUserId = 0
+        uiScope.launch {
+            repository.removeOldData()
+
+            when (val result = repository.fetchUsers(mLastRowUserId)) {
+                is BaseResult.Success -> {
+                    showLoading.value = false
+                    if (result.data != null) {
+                        val reposModel = result.data
+                        saveLastRowUserId(reposModel.last().id)
+                        reposLiveData.value = reposModel
+                    }
+                }
+                is BaseResult.Error -> {
+                    showLoading.value = false
+                }
+
+                is BaseResult.Loading -> {
+                    showLoading.value = true
+                }
+            }
+        }
+
     }
 }

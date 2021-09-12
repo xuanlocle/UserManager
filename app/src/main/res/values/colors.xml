@@ -11,4 +11,6 @@
     <color name="grey_f6">#f6f6f6</color>
     <color name="grey_dd">#DDDDDD</color>
 
+    <color name="text_color">#000</color>
+
 </resources>

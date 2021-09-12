@@ -1,10 +1,10 @@
 package com.xuanlocle.usermanager.ui.base
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xuanlocle.usermanager.R
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.collection_base_fragment.recyclerView
 abstract class BaseCollectionFragment<VM : BaseViewModel> : BaseFragmentMVVM<VM>() {
 
     protected var mRecyclerManager: RecyclerManager<Any> = RecyclerManager()
-    protected lateinit var mGridlayoutManager: GridLayoutManager
+    protected var mLayoutManager: LinearLayoutManager? = null
     protected abstract fun initCluster()
     protected var isLoadingMore = false
 
@@ -35,16 +35,19 @@ abstract class BaseCollectionFragment<VM : BaseViewModel> : BaseFragmentMVVM<VM>
         mRecyclerManager.addCluster(cluster)
     }
 
-    open fun getSpanCount(): Int = 1
-
     protected open fun isSupportLoadMore(): Boolean {
         return false
     }
 
-    private fun initRecyclerView(view: View) {
-        mGridlayoutManager = GridLayoutManager(view.context, getSpanCount(), GridLayoutManager.VERTICAL, false);
+    private fun initRecyclerView(view: View, parcelableLayoutManager: Parcelable?) {
+        mLayoutManager = LinearLayoutManager(view.context)
+
+        parcelableLayoutManager?.let {
+            mLayoutManager!!.onRestoreInstanceState(it)
+        }
+
         recyclerView.adapter = mRecyclerManager.adapter
-        recyclerView.layoutManager = mGridlayoutManager
+        recyclerView.layoutManager = mLayoutManager
 
         if (isSupportLoadMore()) {
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -65,20 +68,22 @@ abstract class BaseCollectionFragment<VM : BaseViewModel> : BaseFragmentMVVM<VM>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView(view)
-        vRefresh?.setOnRefreshListener { onRefreshStart() }
-
-
+        var parcelableLayoutManager: Parcelable? = null
         if (savedInstanceState != null) {
+            isLoadingMore = savedInstanceState.getBoolean(Constants.BundleKey.IS_LOADING_MORE)
             viewModel.restoreState(savedInstanceState)
-            return
+            parcelableLayoutManager = savedInstanceState.getParcelable(Constants.BundleKey.LIST_STATE_KEY)
         }
+
+        initRecyclerView(view, parcelableLayoutManager)
+        vRefresh?.setOnRefreshListener { onRefreshStart() }
     }
 
     protected open fun loadMore() {
 
     }
-    protected open fun onLoadMoreComplete(){
+
+    protected open fun onLoadMoreComplete() {
 
     }
 
@@ -92,10 +97,8 @@ abstract class BaseCollectionFragment<VM : BaseViewModel> : BaseFragmentMVVM<VM>
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(
-            Constants.BundleKey.LIST_STATE_KEY,
-            mGridlayoutManager.onSaveInstanceState()
-        );
+        outState.putParcelable(Constants.BundleKey.LIST_STATE_KEY, mLayoutManager?.onSaveInstanceState())
+        outState.putBoolean(Constants.BundleKey.IS_LOADING_MORE, isLoadingMore)
         viewModel.saveState(outState)
     }
 }

@@ -1,0 +1,88 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c663871423d3f0164b6b40e165ef142a",
+    "entities": [
+      {
+        "tableName": "repo_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unique_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `repo_id` INTEGER, `repo_node_id` TEXT, `repo_title` TEXT, `repo_url` TEXT, `repo_description` TEXT, `repo_star_count` INTEGER, `repo_watchers_count` INTEGER, `repo_forks_count` INTEGER, `avatar_url` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uId",
+            "columnName": "unique_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "repo_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "node_id",
+            "columnName": "repo_node_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "repo_title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "html_url",
+            "columnName": "repo_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "repo_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stargazers_count",
+            "columnName": "repo_star_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "watchers_count",
+            "columnName": "repo_watchers_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "forks_count",
+            "columnName": "repo_forks_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "owner.avatar_url",
+            "columnName": "avatar_url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "unique_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c663871423d3f0164b6b40e165ef142a')"
+    ]
+  }
+}
