@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1e330224e66caa5239d97be7786b7f1e",
+    "identityHash": "08c6a9b89c24734a473866f9043fb82d",
     "entities": [
       {
         "tableName": "user_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `login` TEXT NOT NULL, `node_id` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `gravatar_id` TEXT NOT NULL, `url` TEXT NOT NULL, `html_url` TEXT NOT NULL, `followers_url` TEXT NOT NULL, `following_url` TEXT NOT NULL, `gists_url` TEXT NOT NULL, `starred_url` TEXT NOT NULL, `subscriptions_url` TEXT NOT NULL, `organizations_url` TEXT NOT NULL, `repos_url` TEXT NOT NULL, `events_url` TEXT NOT NULL, `received_events_url` TEXT NOT NULL, `type` TEXT NOT NULL, `site_admin` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `login` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `html_url` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,26 +21,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "nodeID",
-            "columnName": "node_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "avatarURL",
             "columnName": "avatar_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "gravatarID",
-            "columnName": "gravatar_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "url",
-            "columnName": "url",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -48,72 +30,6 @@
             "fieldPath": "htmlURL",
             "columnName": "html_url",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "followersURL",
-            "columnName": "followers_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "followingURL",
-            "columnName": "following_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "gistsURL",
-            "columnName": "gists_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "starredURL",
-            "columnName": "starred_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "subscriptionsURL",
-            "columnName": "subscriptions_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "organizationsURL",
-            "columnName": "organizations_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "reposURL",
-            "columnName": "repos_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "eventsURL",
-            "columnName": "events_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "receivedEventsURL",
-            "columnName": "received_events_url",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "type",
-            "columnName": "type",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "siteAdmin",
-            "columnName": "site_admin",
-            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -204,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e330224e66caa5239d97be7786b7f1e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '08c6a9b89c24734a473866f9043fb82d')"
     ]
   }
 }

@@ -16,7 +16,7 @@ class LandingActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
+        if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()

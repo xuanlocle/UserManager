@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.xuanlocle.usermanager.R
 import com.xuanlocle.usermanager.data.model.UserProfileModel
 import com.xuanlocle.usermanager.ui.base.BaseFragmentMVVM
+import com.xuanlocle.usermanager.ui.user_profile.dialog.ImageDialog
 import com.xuanlocle.usermanager.util.Constants
+import com.xuanlocle.usermanager.util.NumberHelper
 import com.xuanlocle.usermanager.util.image.ImageHelper
 import kotlinx.android.synthetic.main.user_profile_fragment.*
 import org.kodein.di.KodeinAware
@@ -70,12 +72,25 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
         tvProfileLocation.text =
             if (profile.location?.isNotEmpty() == true) profile.location else "Undefined"
 
-        tvFollowerCount.text = profile.followers.toString()
-        tvFollowingCount.text = profile.following.toString()
-        tvReposCount.text = profile.repos.toString()
+        tvFollowerCount.text = NumberHelper.calcNumberThousand(profile.followers)
+        tvFollowingCount.text = NumberHelper.calcNumberThousand(profile.following)
+        tvReposCount.text = NumberHelper.calcNumberThousand(profile.repos)
 
         tvBioContent.text =
             if (profile.bio?.isNotEmpty() == true) profile.bio else "Nothing"
+
+        imvAvatar.setOnClickListener {
+            showAvatarDialog(profile.name ?: "", profile.avatarURL)
+        }
+    }
+
+    private fun showAvatarDialog(name: String, avatarURL: String) {
+            if (isForeground) {
+                ImageDialog( )
+                    .init(name = name)
+                    .setImageUrl(avatarURL)
+                    .show(parentFragmentManager, "ImageDialog")
+            }
     }
 
     override fun init() {

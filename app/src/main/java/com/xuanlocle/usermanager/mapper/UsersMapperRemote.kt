@@ -25,22 +25,8 @@ class UserMapperRemote : BaseMapper<UserRemoteModel, UserModel> {
         return UserModel(
             login = user.login,
             id = user.id,
-            nodeID = user.nodeID,
             avatarURL = user.avatarURL,
-            gravatarID = user.gravatarID,
-            url = user.url,
             htmlURL = user.htmlURL,
-            followersURL = user.followersURL,
-            followingURL = user.followingURL,
-            gistsURL = user.gistsURL,
-            starredURL = user.starredURL,
-            subscriptionsURL = user.subscriptionsURL,
-            organizationsURL = user.organizationsURL,
-            reposURL = user.reposURL,
-            eventsURL = user.eventsURL,
-            receivedEventsURL = user.receivedEventsURL,
-            type = user.type,
-            siteAdmin = user.siteAdmin,
         )
     }
 
@@ -48,22 +34,8 @@ class UserMapperRemote : BaseMapper<UserRemoteModel, UserModel> {
         return UserRemoteModel(
             login = user.login,
             id = user.id,
-            nodeID = user.nodeID,
             avatarURL = user.avatarURL,
-            gravatarID = user.gravatarID,
-            url = user.url,
             htmlURL = user.htmlURL,
-            followersURL = user.followersURL,
-            followingURL = user.followingURL,
-            gistsURL = user.gistsURL,
-            starredURL = user.starredURL,
-            subscriptionsURL = user.subscriptionsURL,
-            organizationsURL = user.organizationsURL,
-            reposURL = user.reposURL,
-            eventsURL = user.eventsURL,
-            receivedEventsURL = user.receivedEventsURL,
-            type = user.type,
-            siteAdmin = user.siteAdmin,
         )
     }
 }

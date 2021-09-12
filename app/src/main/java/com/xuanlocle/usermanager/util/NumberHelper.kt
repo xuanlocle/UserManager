@@ -1,21 +1,23 @@
 package com.xuanlocle.usermanager.util
 
+import java.text.DecimalFormat
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
+
 object NumberHelper {
 
-    private const val THOUSAND: Int = 1000
-    private const val MILLION: Int = 1000000
-    private const val BILLION: Int = 1000000000
+    private val suffix = charArrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
 
-    fun calcNumberThousand(x: Int?): String {
-
-        if (x == null || x == 0)
-            return "0"
-
-        return when {
-            x < THOUSAND -> x.toString()
-            x < MILLION -> "${x.times(100).div(THOUSAND).times(0.01)}K"
-            x < BILLION -> "${x.times(100).div(MILLION).times(0.01)}M"
-            else -> "${x.times(100).div(BILLION).times(0.01)}B"
+    fun calcNumberThousand(numValue: Long): String {
+        val value = floor(log10(numValue.toDouble())).toInt()
+        val base = value / 3
+        return if (value >= 3 && base < suffix.size) {
+            DecimalFormat("#0.0").format(
+                numValue / 10.0.pow((base * 3).toDouble())
+            ) + suffix[base]
+        } else {
+            DecimalFormat("#,##0").format(numValue)
         }
     }
 }

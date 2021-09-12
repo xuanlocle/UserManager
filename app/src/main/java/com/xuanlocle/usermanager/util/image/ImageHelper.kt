@@ -1,10 +1,17 @@
 package com.xuanlocle.usermanager.util.image
 
+import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.imageview.ShapeableImageView
+import com.vn.photoviewer.ImageSource
+import com.vn.photoviewer.SubsamplingScaleImageView
 import com.xuanlocle.usermanager.R
 
 object ImageHelper {
@@ -56,6 +63,39 @@ object ImageHelper {
                 .into(imageView)
         }
     }
+
+    fun loadImageZoomable(imageUrl: String, imageView: SubsamplingScaleImageView) {
+        val requestOption: RequestOptions = RequestOptions()
+            .fitCenter()
+        var rawImageUrl: String
+        with(DisplayMetrics()) {
+            imageView.context.display?.getMetrics(this)
+            rawImageUrl = imageUrl + ("?w=${this.widthPixels}")
+        }
+
+//        val thumbnailUrl = imageUrl + ("?w=${10}")
+        val thumbnailRequest = Glide.with(imageView.context)
+            .load(imageUrl)
+
+        Glide.with(imageView.context)
+            .load(rawImageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .thumbnail(thumbnailRequest)
+            .apply(requestOption)
+            .into(object : CustomTarget<Drawable?>() {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable?>?
+                ) {
+                    imageView.setImage(ImageSource.drawable(resource))
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+//                    imageView.setImage(ImageSource.resource(R.drawable.empty))
+                }
+            })
+    }
+
 
 
 }

@@ -21,7 +21,7 @@ class RepoRecyclerViewItem(
                 vh.bindName(userModel.login)
             }
 
-            if(userModel.url.isNotEmpty()){
+            if(userModel.htmlURL.isNotEmpty()){
                 vh.bindDescription(userModel.htmlURL)
 
                 if(listener != null){
