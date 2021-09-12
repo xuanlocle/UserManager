@@ -1,13 +1,29 @@
-# UserManager Application
-This is a simple application, which use github apis to show the list of users and their detail profile
-
-# Summary
+# UserManager Application Summary
+This is a simple application, which use github apis to show the list of users and their detail profile. 
 Android users manager application implemented using the MVVM pattern, Kodein, Retrofit , LiveData, ViewModel, Coroutines, Room. UserManager fetches data from the [Github API](https://api.github.com/) to provide list users information. 
+
+<table>
+  <tr>
+    <th>
+      <p align="center"><a><img src="image/landing_user.png" width="300"></a></p>
+    </th>
+    <th>
+      <p align="center"><a><img src="image/profile_user.png" width="300"></a></p>
+    </th>
+    <th>
+      <p align="center"><a><img src="image/image_viewer.png" width="300"></a></p>
+    </th>
+    <th>
+      <p align="center"><a><img src="image/error_handling.png" width="300"></a></p>
+    </th>
+  </tr>
+</table>
+
 
 
 # App download
 
-Android download link：
+Android download link：https://github.com/xuanlocle/UserManager/blob/e18894bba041672fd8c2ae6c0fe56d0bf3f167e9/app-dev-release.apk
 
 # Features
 
