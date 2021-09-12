@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.xuanlocle.usermanager.R
 import com.xuanlocle.usermanager.data.model.UserProfileModel
 import com.xuanlocle.usermanager.ui.base.BaseFragmentMVVM
+import com.xuanlocle.usermanager.ui.common.ErrorDialog
 import com.xuanlocle.usermanager.ui.user_profile.dialog.ImageDialog
 import com.xuanlocle.usermanager.util.Constants
 import com.xuanlocle.usermanager.util.NumberHelper
@@ -44,8 +45,10 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
         arguments?.let { args ->
             if (args.containsKey(Constants.BundleKey.USER_ID)) {
                 val userLoginId = args.getString(Constants.BundleKey.USER_ID) ?: ""
-                if (userLoginId == "")
+                if (userLoginId == "") {
+                    navigateBack()
                     return
+                }
                 viewModel.getProfile(userLoginId)
             }
         }
@@ -56,13 +59,31 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
         viewModel.profileLiveData.observe(viewLifecycleOwner, { profile ->
             showProfileInfo(profile)
         })
-        viewModel.isLoading.observe(viewLifecycleOwner, {
-            if(it){
+        viewModel.showLoadingLiveData.observe(viewLifecycleOwner, {
+            if (it) {
                 onRefreshStart()
                 return@observe
             }
             onRefreshCompleted()
         })
+        viewModel.showErrorLiveData.observe(viewLifecycleOwner, {
+            showErrorDialog(it)
+        })
+    }
+
+    private fun navigateBack() {
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun showErrorDialog(error: String) {
+        if (isForeground) {
+            ErrorDialog()
+                .init(content = error)
+                .setNegativeListener {
+                    navigateBack()
+                }
+                .show(parentFragmentManager, "ImageDialog")
+        }
     }
 
     private fun getRandomBackground(): Int {
@@ -77,8 +98,18 @@ class UserProfileFragment : BaseFragmentMVVM<UserProfileViewModel>(), KodeinAwar
     private fun showProfileInfo(profile: UserProfileModel) {
         ImageHelper.loadImageDrawableForShape(getRandomBackground(), imvBackground)
         ImageHelper.loadImageShapeable(profile.avatarURL, imvAvatar)
-        tvProfileName.text =
-            if (profile.name?.isNotEmpty() == true) profile.name else "Undefined"
+
+        when {
+            profile.name?.isNotEmpty() == true -> {
+                tvProfileName.text = profile.name
+            }
+            profile.login.isNotEmpty() -> {
+                tvProfileName.text = profile.login
+            }
+            else -> {
+                tvProfileName.text = "Undefined"
+            }
+        }
 
         tvProfileLocation.text =
             if (profile.location?.isNotEmpty() == true) profile.location else "Undefined"

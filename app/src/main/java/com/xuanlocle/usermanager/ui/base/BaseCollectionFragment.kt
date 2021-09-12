@@ -76,7 +76,11 @@ abstract class BaseCollectionFragment<VM : BaseViewModel> : BaseFragmentMVVM<VM>
         }
 
         initRecyclerView(view, parcelableLayoutManager)
-        vRefresh?.setOnRefreshListener { onRefreshStart() }
+        vRefresh?.setOnRefreshListener { onPullReload() }
+    }
+
+    protected open fun onPullReload(){
+
     }
 
     protected open fun loadMore() {

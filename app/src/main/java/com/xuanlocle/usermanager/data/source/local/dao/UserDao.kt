@@ -11,7 +11,7 @@ import com.xuanlocle.usermanager.data.source.local.entity.DBUserProfileEntity
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUsers(dbRepos: List<DBUserEntity>)
+    suspend fun insertUsers(dbUserLists: List<DBUserEntity>)
 
     @Query("SELECT * FROM user_table WHERE id > :since ORDER BY id")
     suspend fun getUserSinceId(since: Int): List<DBUserEntity>
@@ -24,7 +24,7 @@ interface UserDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUserProfile(dbRepo: DBUserProfileEntity)
+    suspend fun insertUserProfile(dbUser: DBUserProfileEntity)
 
     @Query("SELECT * FROM user_profile_table WHERE login = :userLoginId LIMIT 1")
     suspend fun getUserProfileById(userLoginId: String): DBUserProfileEntity

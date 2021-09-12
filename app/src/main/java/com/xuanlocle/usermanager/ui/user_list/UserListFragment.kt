@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.xuanlocle.usermanager.R
 import com.xuanlocle.usermanager.ui.adapter.item.LoadingRecyclerItem
 import com.xuanlocle.usermanager.ui.base.BaseCollectionFragment
+import com.xuanlocle.usermanager.ui.common.ErrorDialog
 import com.xuanlocle.usermanager.ui.landing.LandingActivity
 import com.xuanlocle.usermanager.ui.user_list.item.RepoRecyclerViewItem
 import com.xuanlocle.usermanager.ui.user_list.item.UserRecyclerItemListener
@@ -38,7 +39,7 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
     }
 
     override fun initObserve() {
-        viewModel.repos.observe(viewLifecycleOwner, { repos ->
+        viewModel.userListLiveData.observe(viewLifecycleOwner, { repos ->
             onRefreshCompleted()
             repos?.let {
                 mRecyclerManager.replace(
@@ -47,7 +48,7 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
             }
         })
 
-        viewModel.reposMore.observe(viewLifecycleOwner, { repos ->
+        viewModel.userListMoreLiveData.observe(viewLifecycleOwner, { repos ->
             if (isLoadingMore) {
                 onLoadMoreComplete()
                 mRecyclerManager.append(RepoRecyclerViewItem::class,
@@ -55,11 +56,23 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
             }
         })
 
+        viewModel.showLoadingLiveData.observe(viewLifecycleOwner, {
+            if (it) {
+                onRefreshStart()
+                return@observe
+            }
+            onRefreshCompleted()
+        })
+
         viewModel.isLoadingMore.observe(viewLifecycleOwner, {
             if (it && isLoadingMore == false) {
                 isLoadingMore = true
                 addLoadingMoreUpdate()
             }
+        })
+
+        viewModel.showErrorLiveData.observe(viewLifecycleOwner, {
+            showErrorDialog(it)
         })
     }
 
@@ -106,8 +119,17 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
 
     }
 
-    override fun onRefreshStart() {
-        super.onRefreshStart()
+    override fun onPullReload() {
+        super.onPullReload()
         viewModel.reloadUserLists()
+    }
+
+    private fun showErrorDialog(error: String) {
+        if (isForeground) {
+            ErrorDialog()
+                .init(content = error)
+                .show(parentFragmentManager, "ImageDialog")
+        }
+
     }
 }

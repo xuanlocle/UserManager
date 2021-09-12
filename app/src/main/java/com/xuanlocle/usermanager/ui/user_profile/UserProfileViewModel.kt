@@ -16,8 +16,6 @@ class UserProfileViewModel(private val repository: UserRepository) : BaseViewMod
     val profileLiveData: LiveData<UserProfileModel>
         get() = profile
 
-    val isLoading: LiveData<Boolean> get() = showLoading
-
     private lateinit var profileId: String
 
     fun getProfile(userLoginId: String) {
@@ -34,6 +32,7 @@ class UserProfileViewModel(private val repository: UserRepository) : BaseViewMod
                 }
                 is BaseResult.Error -> {
                     showLoading.value = false
+                    showError.value = result.error
                 }
 
                 is BaseResult.Loading -> {
@@ -56,6 +55,7 @@ class UserProfileViewModel(private val repository: UserRepository) : BaseViewMod
                 }
                 is BaseResult.Error -> {
                     showLoading.value = false
+                    showError.value = result.error
                 }
 
                 is BaseResult.Loading -> {

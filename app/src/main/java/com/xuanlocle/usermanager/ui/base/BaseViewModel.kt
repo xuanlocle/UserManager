@@ -1,6 +1,7 @@
 package com.xuanlocle.usermanager.ui.base
 
 import android.os.Bundle
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.xuanlocle.usermanager.widget.MutableLiveDataSingle
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +16,10 @@ abstract class BaseViewModel : ViewModel() {
     protected lateinit var uiScope: CoroutineScope
     protected lateinit var ioContext: CoroutineContext
     protected val showLoading = MutableLiveDataSingle<Boolean>()
+    val showLoadingLiveData: LiveData<Boolean> get() = showLoading
 
+    protected val showError = MutableLiveDataSingle<String>()
+    val showErrorLiveData: LiveData<String> get() = showError
 
     fun init() {
         onCreate()
@@ -32,10 +36,6 @@ abstract class BaseViewModel : ViewModel() {
         uiScope.cancel()
         ioContext.cancel()
     }
-
-    open fun showLoading() {}
-
-    open fun hideLoading() {}
 
     abstract fun saveState(outState: Bundle)
     abstract fun restoreState(savedInstanceState: Bundle)

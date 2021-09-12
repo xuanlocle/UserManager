@@ -17,8 +17,8 @@ class UserRemoteDataSourceImpl(
             return@withContext try {
                 service.fetchUsersAsync(sinceUserId)
                     .await()
-                    .let { reposRes ->
-                        BaseResult.Success(reposRes)
+                    .let { userListRes ->
+                        BaseResult.Success(userListRes)
                     }
 
             } catch (ex: Exception) {
@@ -32,8 +32,8 @@ class UserRemoteDataSourceImpl(
             return@withContext try {
                 service.fetchUserProfileAsync(userLoginId)
                     .await()
-                    .let { reposRes ->
-                        BaseResult.Success(reposRes)
+                    .let { userRes ->
+                        BaseResult.Success(userRes)
                     }
 
             } catch (ex: Exception) {

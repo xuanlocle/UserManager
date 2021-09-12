@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vRootDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_60">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin_large"
+        android:background="@drawable/bg_white_round_corner_10"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_normal">
+
+        <com.xuanlocle.usermanager.widget.TextViewEx
+            android:id="@+id/tvTitle"
+            style="@style/TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            app:fontSize="title"
+            app:fontType="bold"
+            android:text="@string/error_dialog_title"
+            tools:text="Title" />
+
+
+        <com.xuanlocle.usermanager.widget.TextViewEx
+            android:id="@+id/tvContent"
+            style="@style/TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            app:fontSize="normal"
+            app:fontType="regular"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia ante id velit euismod malesuada. Curabitur congue vestibulum metus. Fusce lectus quam, tincidunt vitae quam et, eleifend viverra lacus" />
+
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="OK" />
+    </LinearLayout>
+
+</RelativeLayout>

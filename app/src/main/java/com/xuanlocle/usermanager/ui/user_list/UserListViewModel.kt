@@ -15,15 +15,14 @@ import kotlinx.coroutines.launch
 
 class UserListViewModel(private val repository: UserRepository) : BaseViewModel() {
 
-    private var reposLiveData = MutableLiveData<List<UserModel>>()
-    val repos: LiveData<List<UserModel>>
-        get() = reposLiveData
+    private var userList = MutableLiveData<List<UserModel>>()
+    val userListLiveData: LiveData<List<UserModel>>
+        get() = userList
 
-    private var reposMoreLiveData = MutableLiveDataSingle<List<UserModel>>()
-    val reposMore: LiveData<List<UserModel>>
-        get() = reposMoreLiveData
+    private var userListMore = MutableLiveDataSingle<List<UserModel>>()
+    val userListMoreLiveData: LiveData<List<UserModel>>
+        get() = userListMore
 
-    val isLoading: LiveData<Boolean> get() = showLoading
 
     private val showLoadingMore = MutableLiveDataSingle<Boolean>()
     val isLoadingMore: LiveData<Boolean> get() = showLoadingMore
@@ -46,13 +45,14 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
                 is BaseResult.Success -> {
                     showLoading.value = false
                     if (result.data != null) {
-                        val reposModel = result.data
-                        saveLastRowUserId(reposModel.last().id)
-                        reposLiveData.value = reposModel
+                        val userModel = result.data
+                        saveLastRowUserId(userModel.last().id)
+                        userList.value = userModel
                     }
                 }
                 is BaseResult.Error -> {
                     showLoading.value = false
+                    showError.value = result.error
                 }
 
                 is BaseResult.Loading -> {
@@ -62,6 +62,7 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
         }
     }
 
+
     fun getMoreUserLists() {
         showLoadingMore.value = true
         uiScope.launch {
@@ -70,14 +71,15 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
                     showLoading.value = false
                     if (result.data != null) {
                         showLoadingMore.value = false
-                        val reposModel = result.data
-                        saveLastRowUserId(reposModel.last().id)
-                        reposMoreLiveData.value = reposModel
+                        val userModel = result.data
+                        saveLastRowUserId(userModel.last().id)
+                        userListMore.value = userModel
 
                     }
                 }
                 is BaseResult.Error -> {
                     showLoadingMore.value = false
+                    showError.value = result.error
                 }
 
                 is BaseResult.Loading -> {
@@ -102,6 +104,7 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
     }
 
     fun reloadUserLists() {
+        showLoading.value = true
         mLastRowUserId = 0
         uiScope.launch {
             repository.removeOldData()
@@ -110,13 +113,14 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
                 is BaseResult.Success -> {
                     showLoading.value = false
                     if (result.data != null) {
-                        val reposModel = result.data
-                        saveLastRowUserId(reposModel.last().id)
-                        reposLiveData.value = reposModel
+                        val userModel = result.data
+                        saveLastRowUserId(userModel.last().id)
+                        userList.value = userModel
                     }
                 }
                 is BaseResult.Error -> {
                     showLoading.value = false
+                    showError.value = result.error
                 }
 
                 is BaseResult.Loading -> {
