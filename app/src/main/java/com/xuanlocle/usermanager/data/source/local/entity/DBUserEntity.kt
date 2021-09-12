@@ -12,7 +12,7 @@ data class DBUserEntity(
 
     @ColumnInfo(name = "id")
     @PrimaryKey()
-    val id: Long,
+    val id: Int,
 
     @ColumnInfo(name = "login")
     val login: String,

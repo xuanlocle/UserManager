@@ -19,9 +19,9 @@ class UserRecyclerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.tvDescription.text = htmlURL
     }
 
-    fun bindListener(htmlURL: String, listener: UserRecyclerItemListener) {
+    fun bindListener(userLoginId: String, listener: UserRecyclerItemListener) {
         itemView.setOnClickListener {
-            listener.onClickUserItem(htmlURL)
+            listener.onClickUserItem(userLoginId)
         }
     }
 

@@ -10,12 +10,14 @@ object ActivityUtils {
         fragment: Fragment,
         frameId: Int
     ) {
-        val transaction = fragmentManager.beginTransaction()
+        val transaction =
+            fragmentManager.beginTransaction()
         transaction.setCustomAnimations(
             R.anim.slide_from_right, R.anim.slide_to_left,
             R.anim.slide_from_left, R.anim.slide_to_right
         ) //default
-        transaction.add(frameId, fragment, fragment::class.java.simpleName).addToBackStack(null)
+        transaction.add(frameId, fragment)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -38,6 +40,7 @@ object ActivityUtils {
             R.anim.slide_from_left, R.anim.slide_to_right
         ) //default
         transaction.add(frameId, fragment, tag)
+        transaction.addToBackStack(tag)
         transaction.commit()
     }
 

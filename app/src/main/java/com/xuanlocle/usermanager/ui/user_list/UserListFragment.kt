@@ -1,15 +1,15 @@
 package com.xuanlocle.usermanager.ui.user_list
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.xuanlocle.usermanager.R
 import com.xuanlocle.usermanager.ui.adapter.item.LoadingRecyclerItem
 import com.xuanlocle.usermanager.ui.base.BaseCollectionFragment
+import com.xuanlocle.usermanager.ui.landing.LandingActivity
 import com.xuanlocle.usermanager.ui.user_list.item.RepoRecyclerViewItem
 import com.xuanlocle.usermanager.ui.user_list.item.UserRecyclerItemListener
+import com.xuanlocle.usermanager.ui.user_profile.UserProfileFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -71,7 +71,7 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState ?: viewModel.getRepositories()
+        savedInstanceState ?: viewModel.getUserLists()
     }
 
     override fun loadMore() {
@@ -80,7 +80,7 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
 
         addLoadingMoreUpdate()
         isLoadingMore = true
-        viewModel.getMoreRepositories()
+        viewModel.getMoreUserLists()
     }
 
 
@@ -98,14 +98,16 @@ class UserListFragment : BaseCollectionFragment<UserListViewModel>(), KodeinAwar
         mRecyclerManager.adapter?.remove(mRecyclerManager.adapter.itemCount - 1)
     }
 
-    override fun onClickUserItem(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        startActivity(intent)
+    override fun onClickUserItem(userLoginId: String) {
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        intent.data = Uri.parse(url)
+//        startActivity(intent)
+        (activity as LandingActivity).addFragment(UserProfileFragment.newInstance(userLoginId))
+
     }
 
     override fun onRefreshStart() {
         super.onRefreshStart()
-        viewModel.reloadRepositories()
+        viewModel.reloadUserLists()
     }
 }

@@ -25,7 +25,7 @@ class RepoRecyclerViewItem(
                 vh.bindDescription(userModel.htmlURL)
 
                 if(listener != null){
-                    vh.bindListener(userModel.htmlURL, listener)
+                    vh.bindListener(userModel.login, listener)
                 }
             }
         }
@@ -37,6 +37,6 @@ class RepoRecyclerViewItem(
 }
 
 interface UserRecyclerItemListener {
-    fun onClickUserItem(url: String)
+    fun onClickUserItem(userLoginId: String)
 }
 

@@ -1,5 +1,6 @@
 package com.xuanlocle.usermanager.ui.base
 
+import ActivityUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.xuanlocle.usermanager.R
@@ -12,7 +13,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     fun addFragment(fragment: Fragment) {
-        fragment?.let {
+        fragment.let {
             supportFragmentManager.let {
                 ActivityUtils.addFragmentToActivityWithTag(
                     supportFragmentManager, fragment, R.id.container, fragment.javaClass.name
@@ -20,6 +21,5 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }

@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.xuanlocle.usermanager.data.source.local.dao.UserDao
 import com.xuanlocle.usermanager.data.source.local.entity.DBUserEntity
+import com.xuanlocle.usermanager.data.source.local.entity.DBUserProfileEntity
 
-@Database(entities = [DBUserEntity::class], version = 1, exportSchema = true)
+@Database(entities = [DBUserEntity::class, DBUserProfileEntity::class], version = 1, exportSchema = true)
 abstract class UserDatabase() : RoomDatabase() {
     abstract fun getUserDao(): UserDao
 

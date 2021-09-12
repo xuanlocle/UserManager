@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class UserRemoteModel(
     val login: String,
-    val id: Long,
+    val id: Int,
 
     @SerializedName("node_id")
     val nodeID: String,

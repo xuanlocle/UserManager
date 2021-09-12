@@ -6,5 +6,6 @@ object Constants {
         const val LIST_STATE_KEY: String = "LIST_STATE_KEY"
         const val IS_LOADING_MORE: String = "IS_LOADING_MORE"
 
+        const val USER_ID: String = "USER_ID"
     }
 }

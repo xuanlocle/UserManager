@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "65c35684eb1a65482417df06323ac88f",
+    "identityHash": "1e330224e66caa5239d97be7786b7f1e",
     "entities": [
       {
         "tableName": "user_table",
@@ -125,12 +125,86 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "user_profile_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `login` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `html_url` TEXT NOT NULL, `name` TEXT, `location` TEXT, `bio` TEXT, `followers` INTEGER NOT NULL, `following` INTEGER NOT NULL, `public_repos` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "login",
+            "columnName": "login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avatarURL",
+            "columnName": "avatar_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "htmlURL",
+            "columnName": "html_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bio",
+            "columnName": "bio",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "followers",
+            "columnName": "followers",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "following",
+            "columnName": "following",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repos",
+            "columnName": "public_repos",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '65c35684eb1a65482417df06323ac88f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e330224e66caa5239d97be7786b7f1e')"
     ]
   }
 }

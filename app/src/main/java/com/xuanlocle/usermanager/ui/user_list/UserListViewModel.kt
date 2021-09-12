@@ -23,7 +23,6 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
     val reposMore: LiveData<List<UserModel>>
         get() = reposMoreLiveData
 
-    private val showLoading = MutableLiveDataSingle<Boolean>()
     val isLoading: LiveData<Boolean> get() = showLoading
 
     private val showLoadingMore = MutableLiveDataSingle<Boolean>()
@@ -34,7 +33,7 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
      */
     private var mLastRowUserId = 0
 
-    fun getRepositories() {
+    fun getUserLists() {
         showLoading.value = true
         uiScope.launch {
             if (usersPreference.getLastUpdatedAt() > 0) {
@@ -63,7 +62,7 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
         }
     }
 
-    fun getMoreRepositories() {
+    fun getMoreUserLists() {
         showLoadingMore.value = true
         uiScope.launch {
             when (val result = repository.fetchUsers(mLastRowUserId)) {
@@ -89,8 +88,8 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
     }
 
 
-    private fun saveLastRowUserId(lastRowUserId: Long) {
-        this.mLastRowUserId = lastRowUserId.toInt()
+    private fun saveLastRowUserId(lastRowUserId: Int) {
+        this.mLastRowUserId = lastRowUserId
     }
 
     override fun saveState(outState: Bundle) {
@@ -102,7 +101,7 @@ class UserListViewModel(private val repository: UserRepository) : BaseViewModel(
             mLastRowUserId = savedInstanceState.getInt(Constants.BundleKey.LAST_ROW_USER_ID)
     }
 
-    fun reloadRepositories() {
+    fun reloadUserLists() {
         mLastRowUserId = 0
         uiScope.launch {
             repository.removeOldData()

@@ -1,6 +1,7 @@
 package com.xuanlocle.usermanager.util.image
 
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.imageview.ShapeableImageView
@@ -37,4 +38,24 @@ object ImageHelper {
                 .into(imageView)
         }
     }
+
+
+    fun loadImageDrawableForShape(
+        @DrawableRes res: Int,
+        imageView: ShapeableImageView,
+        resPlaceHolder: Int = 0
+    ) {
+        if (verifyInput(res, imageView)) {
+            var requestOptions = RequestOptions()
+            if (resPlaceHolder != 0) requestOptions =
+                requestOptions.placeholder(resPlaceHolder).dontAnimate()
+
+            Glide.with(imageView.context)
+                .load(res)
+                .apply(requestOptions)
+                .into(imageView)
+        }
+    }
+
+
 }

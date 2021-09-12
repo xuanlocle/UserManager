@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserModel(
     val login: String,
-    val id: Long,
+    val id: Int,
 
     @SerializedName("node_id")
     val nodeID: String,

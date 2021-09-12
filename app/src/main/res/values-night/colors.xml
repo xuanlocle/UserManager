@@ -2,5 +2,6 @@
 <resources>
 
     <color name="text_color">#fff</color>
+    <color name="background">#000000</color>
 
 </resources>

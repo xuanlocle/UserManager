@@ -3,4 +3,10 @@
 
 
     <string name="user_list_action_bar_title">User list</string>
+    <string name="profile_bio_title">Bio</string>
+    <string name="profile_bio_content">User bio here</string>
+
+    <string name="profile_followers_title">Followers</string>
+    <string name="profile_followings_title">Followings</string>
+    <string name="profile_repos_title">Repos</string>
 </resources>

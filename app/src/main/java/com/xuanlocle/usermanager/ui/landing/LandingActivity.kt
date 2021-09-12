@@ -10,7 +10,17 @@ class LandingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_landing)
-        savedInstanceState ?: addFragment(UserListFragment.newInstance())
+        setContentView(R.layout.landing_activity)
+        savedInstanceState ?: replaceFragment(UserListFragment.newInstance())
     }
+
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
 }
